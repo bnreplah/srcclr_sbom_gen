@@ -5,14 +5,18 @@ import sys, json
 __version__ = "0.0.1"
 
 def convert(results_file, output_file):
-	
+
+	# Check if no results file or output file currently available
 	if(results_file == "" or output_file == ""):
 		print("Usage: srcclr-sbom-gen.py <scan_results.json> <output_file.json>")
 		return
 
-
+	# TODO: Add more SBOM formats
 	sbom = {"bomFormat": "CycloneDX",'components':[]}
 	components = []
+	# TODO: Add Vulnerabilities section
+	# TODO: ADd the ability to combine SBOMs
+	
 
 	with open(results_file) as file:
 		scanresults = json.load(file)
@@ -20,7 +24,7 @@ def convert(results_file, output_file):
 		libraries = records[0]['libraries']
 		for lib in libraries:
 			coordinate2 = "" if lib['coordinate2'] == "" else ":" + lib['coordinate2']
-			lib_name = lib['coordinate1'] if lib['coordinate2'] == "" else lib['coordinate1'] + "/" + lib['coordinate2']
+			lib_name = lib['coordinate1'] if lib['coordinate2'] == "" else lib['coordinate1'] + "/" + lib['coordinate2'] # need to potentially put a patch in here if to use it for CPE as well
 			try:
 				hash_sha1 = lib['versions'][0]['sha1']
 			except:
@@ -30,6 +34,9 @@ def convert(results_file, output_file):
 			except:
 				hash_sha2 = ""
 			purl = "pkg:{}/{}@{}".format(lib['coordinateType'].lower(), lib_name, lib["versions"][0]['version'])
+			cpe = "cpe:2.3:o:{}:{}:{}:*:*:*:*:*:*:*"
+			# checking to see if the components are populated? 
+			# Need to figure out what is going on here before coming back
 			for c in components:
 				if c['purl'] == purl:
 					continue
