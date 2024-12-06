@@ -8,7 +8,7 @@ setup(
     author="Hanley Shun",
     author_email="hshun@veracode.com",
     description="Parses srcclr scan results and converts to CycloneDX [https://cyclonedx.org/] SBOM JSON format.",
-    url="https://github.com/srcclr/srcclr_sbom_gen",
+    url="https://github.com/bnreplah/srcclr_sbom_gen",
     license="Veracode",
     packages=["srcclr_sbom_gen"],
     scripts=["srcclr_sbom_gen/srcclr_sbom_gen.py"]
